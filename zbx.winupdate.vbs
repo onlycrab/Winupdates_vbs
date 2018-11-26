@@ -3,7 +3,7 @@ On Error Resume Next
 If WScript.Arguments.Count < 2 Then 'the path may contain spaces
 	senderPath = "c:\zabbix\zabbix_sender.exe"
 	confPath = "c:\zabbix\zabbix_agentd.win.conf"
-Else If WScript.Arguments.Count = 2 Then
+Elseif WScript.Arguments.Count = 2 Then
 	senderPath = WScript.Arguments(0)
 	confPath = WScript.Arguments(1)
 Else
