@@ -115,5 +115,4 @@ End If
 Function CheckUpdatesQuantity(updateType, updateCategoryID)
 	Set searchResult = updateSearcher.Search("Type='" & updateType & "' AND IsInstalled=0 AND CategoryIDs contains '" & updateCategoryID & "'")
 	CheckUpdatesQuantity = searchResult.Updates.count
-	searchResult = Nothing
 End Function
