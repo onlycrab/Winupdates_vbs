@@ -10,6 +10,7 @@ Else
 	WScript.Quit(1)
 End If
 '----------DEFINITION------------
+IsSendDataWhenErrors = False
 Dim WshShell, updateSession, updateSearcher, searchResult, commandPart, AllUpdates, CriticalUpdates, DefinitionUpdates, SecurityUpdates, ServicePacks, UpdateRollUps, RebootRequired, RebootRequiredForNewUpdates
 Set WshShell = WScript.CreateObject("WScript.Shell")
 Set updateSession = createObject("Microsoft.Update.Session")
@@ -25,7 +26,7 @@ CriticalUpdates = -1
 If updatesDetectedByTypes <> AllUpdates Then
 	CriticalUpdates = CheckUpdatesQuantity("Software", "E6CF1350-C01B-414D-A61F-263D14D133B4") 'CriticalUpdates	
 	updatesDetectedByTypes = updatesDetectedByTypes + CriticalUpdates
-Else
+Elseif AllUpdates <> -1 Then 
 	CriticalUpdates = 0
 End If
 '----------SEARCH SECURITY-------
@@ -33,7 +34,7 @@ SecurityUpdates = -1
 If updatesDetectedByTypes <> AllUpdates Then
 	SecurityUpdates = CheckUpdatesQuantity("Software", "0FA1201D-4330-4FA8-8AE9-B877473B6441") 'SecurityUpdates
 	updatesDetectedByTypes = updatesDetectedByTypes + SecurityUpdates
-Else
+Elseif AllUpdates <> -1 Then 
 	SecurityUpdates = 0
 End If
 '----------SEARCH DEFINITION-----
@@ -41,7 +42,7 @@ DefinitionUpdates = -1
 If updatesDetectedByTypes <> AllUpdates Then
 	DefinitionUpdates = CheckUpdatesQuantity("Software", "E0789628-CE08-4437-BE74-2495B842F43B") 'DefinitionUpdates
 	updatesDetectedByTypes = updatesDetectedByTypes + DefinitionUpdates
-Else
+Elseif AllUpdates <> -1 Then 
 	DefinitionUpdates = 0
 End If	
 '----------SEARCH SERVICEPACKS---
@@ -49,7 +50,7 @@ ServicePacks = -1
 If updatesDetectedByTypes <> AllUpdates Then
 	ServicePacks = CheckUpdatesQuantity("Software", "68C5B0A3-D1A6-4553-AE49-01D3A7827828") 'ServicePacks
 	updatesDetectedByTypes = updatesDetectedByTypes + ServicePacks
-Else
+Elseif AllUpdates <> -1 Then 
 	ServicePacks = 0
 End If	
 '----------SEARCH ROOLUPS--------
@@ -57,7 +58,7 @@ UpdateRollUps = -1
 If updatesDetectedByTypes <> AllUpdates Then
 	UpdateRollUps = CheckUpdatesQuantity("Software", "28BC880E-0592-4CBF-8F95-C79B17911D5F") 'UpdateRollUps
 	updatesDetectedByTypes = updatesDetectedByTypes + UpdateRollUps
-Else
+Elseif AllUpdates <> -1 Then 
 	UpdateRollUps = 0
 End If
 '----------REBOOT REQUIRED-------
@@ -76,13 +77,17 @@ If RebootRequiredFlag > 0 Then
 Else
 	RebootRequired = "0"
 End If
-'----------SENT DATA-------------
+'----------SEND DATA-------------
 If AllUpdates = -1 Or CriticalUpdates = -1 Or DefinitionUpdates = -1 Or SecurityUpdates = -1 Or ServicePacks = -1 Or UpdateRollUps = - 1 Then
-	strRun = commandPart & "zbx.winupdate.vbs.wsusavailability -o 0"	
+	strRun = commandPart & "zbx.winupdate.vbs.wsusavailability -o 0"
+	WshShell.Run strRun,1,True
+	If IsSendDataThanErrors = False Then
+		WScript.Quit(1)
+	End If
 Else
 	strRun = commandPart & "zbx.winupdate.vbs.wsusavailability -o 1"
+	WshShell.Run strRun,1,True
 End If
-WshShell.Run strRun,1,True
 
 strRun = commandPart & "zbx.winupdate.vbs.all -o " & CStr(AllUpdates)
 WshShell.Run strRun,1,True
