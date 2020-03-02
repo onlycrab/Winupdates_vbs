@@ -257,8 +257,9 @@ Class ZServerActive
 	Public Function Count()
 		If IsNull(zserverArray(0)) And IsNull(zportArray(0)) Then
 			Count = 0
+		Else
+			Count = UBound(zserverArray) + 1
 		End If
-		Count = UBound(zserverArray) + 1
 	End Function
 	
 	Public Function AddElement(zserver, zport)
@@ -285,11 +286,21 @@ Class ZServerActive
 	
 	'parse element from string "zabbix-server:zabbix-port"
 	Public Function AddElementStr(zserverportStr)
-		tmpzsp = Split(zserverportStr, ":")
+		Dim tmpzsp, tmpServ
+		tmpzsp = Split(zserverportStr, ":")	
 		If UBound(tmpzsp) = 1 Then
 			AddElement tmpzsp(0), tmpzsp(1)
 		ElseIf UBound(tmpzsp) = 0 Then
 			AddElement tmpzsp(0), Null
+		Else 'for IPv6 like '::ffff:127.0.0.1' or '::127.0.0.1'
+			tmpServ = ""
+			For i = 0 To UBound(tmpzsp) - 1
+				tmpServ = tmpServ & tmpzsp(i)
+				If i < UBound(tmpzsp) - 1 Then
+					tmpServ = tmpServ & ":"
+				End If
+			Next
+			AddElement tmpServ, tmpzsp(UBound(tmpzsp))
 		End If
 	End Function
 	
