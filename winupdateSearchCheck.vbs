@@ -12,7 +12,7 @@ confPath = ""
 '- if no files are found, check in the "c:\" directory
 Dim senderFileName, confFileName, isSenderFound, isConfFound, parentPath
 senderFileName = "zabbix_sender.exe"
-confFileName = "zabbix_agentd.win.conf"
+confFileName = "zabbix_agentd.conf"
 isSenderFound = False
 isConfFound = False
 parentPath = FSO.GetParentFolderName(WScript.ScriptFullName)
