@@ -243,6 +243,16 @@
                     </triggers>
                 </item>
             </items>
+            <macros>
+                <macro>
+                    <macro>{$ZCONF}</macro>
+                    <description>Absolute path to zabbix_agentd.conf</description>
+                </macro>
+                <macro>
+                    <macro>{$ZSENDER}</macro>
+                    <description>Absolute path to zabbix_sender.exe</description>
+                </macro>
+            </macros>
         </template>
     </templates>
 </zabbix_export>
