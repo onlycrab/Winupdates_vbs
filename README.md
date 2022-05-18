@@ -4,7 +4,7 @@
   The script checks the number of all available updates, and only the important types of updates separately (according to https://blogs.technet.microsoft.com/dubaisec/2016/01/28/windows-update-categories/).
   Zabbix template with the necessary metrics is attached to the script.
 ## Compatibility
-  Tested on Windows Server 2008, 2012, 2016; zabbix 3.4.
+  Tested on Windows Server 2008, 2012, 2016; zabbix 5.0.
 ## How to use
   The script can be used in two ways:
   1. Specify macroses {$ZSENDER} (full path to the zabbix_sender.exe) and {$ZPATH} (full path to the zabbix_agentd.win.conf) in the zabbix-node.
