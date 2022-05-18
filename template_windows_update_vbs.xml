@@ -9,8 +9,8 @@
     </groups>
     <templates>
         <template>
-            <template>winnows_updates_vbscript</template>
-            <name>Winnows Updates VBScript</name>
+            <template>windows_updates_vbscript</template>
+            <name>Windows Updates VBScript</name>
             <groups>
                 <group>
                     <name>Custom Templates</name>
